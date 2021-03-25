@@ -82,7 +82,31 @@ public class MovieControllerTest {
             .andDo(print()); 
     }
 
+    @Test
+    public void ID로_영화_조회_400() throws Exception {
 
+        // given
+        String movieId = "1qazxsdfgbReSw#4";
+        MovieDto result = new MovieDto();
+        result.setId(movieId);
+        result.setMovieName("영화 제목");
+
+        given(movieService.getMovieById(movieId)).willThrow(EntityNotFoundException.class);
+
+        // when
+        final ResultActions actions = mvc
+            .perform(get("/v1/movie/" + movieId))
+            .andDo(print())
+            ;
+
+        // then
+        actions 
+            .andExpect(status().is(404))
+            .andExpect(jsonPath("$.message", is(" Entity Not Found")))
+            .andExpect(jsonPath("$.status", is(400)))
+            .andExpect(jsonPath("$.code", is("C003")))                        
+            .andDo(print()); 
+    }
 
 
     @DisplayName("GET /v1/movie/{movidId}")

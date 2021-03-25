@@ -14,6 +14,9 @@ Spring Boot Rest Api MongoDB
 - docker-compose
 
 ### Visual Studio Code
+
+필수는 아니지만 편하게 사용할 수 있어서 추천
+
 install plugins :
 - Project Dashboard 2.3.1
 - Kafka 0.11.0
@@ -25,7 +28,7 @@ install plugins :
 
 
 ## API
-(Swager2)[http://localhost:8080/swagger-ui/]
+[Swager2](http://localhost:8080/swagger-ui/)
 
 ## Build and run application
 
@@ -40,9 +43,9 @@ install plugins :
     ```
 
 3. mongodb master 구성
-```
-docker-compose exec mongo1 mongo --eval 'rs.initiate({_id : "r0", members: [{ _id : 0, host : "mongo1:27017", priority : 1 },{ _id : 1, host :"mongo2:27017", priority : 0 },{ _id : 2, host : "mongo3:27017", priority : 0, arbiterOnly: true }]})'
-```
+    ```
+    docker-compose exec mongo1 mongo --eval 'rs.initiate({_id : "r0", members: [{ _id : 0, host : "mongo1:27017", priority : 1 },{ _id : 1, host :"mongo2:27017", priority : 0 },{ _id : 2, host : "mongo3:27017", priority : 0, arbiterOnly: true }]})'
+    ```
 
 4. Run spring boot
     ```
@@ -56,9 +59,20 @@ docker-compose exec mongo1 mongo --eval 'rs.initiate({_id : "r0", members: [{ _i
 
 ## 참고
 
-### settings.json
+* Workspace Color 0.0.3
+
+VSCODE에서 `settings.json`에서 칼러 설정 추가
+
 ```
     "workbench.colorCustomizations": {
         "activityBar.background": "#8b1163"
       }
 ```
+
+* [Spring Data MongoDB](https://docs.spring.io/spring-boot/docs/2.4.3/reference/htmlsingle/#boot-features-mongodb)
+* [Apache Kafka Streams Support](https://docs.spring.io/spring-kafka/docs/current/reference/html/_reference.html#kafka-streams)
+* [Apache Kafka Streams Binding Capabilities of Spring Cloud Stream](https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#_kafka_streams_binding_capabilities_of_spring_cloud_stream)
+
+## 가이드
+* [Accessing Data with MongoDB](https://spring.io/guides/gs/accessing-data-mongodb/)
+* [Samples for using Apache Kafka Streams with Spring Cloud stream](https://github.com/spring-cloud/spring-cloud-stream-samples/tree/master/kafka-streams-samples)
