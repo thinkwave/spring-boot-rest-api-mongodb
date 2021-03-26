@@ -1,15 +1,18 @@
 package com.exam.api.entity;
 
+import javax.persistence.Entity;
+
 import com.exam.api.controller.dto.MovieDto;
 import com.exam.api.controller.dto.MoviePutDto;
 import com.exam.api.util.ModelMapperUtil;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
-import lombok.Data;
-
-@Data
-@Document(collection = "movie_collection")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class Movie {
 
     private String id;

@@ -13,7 +13,6 @@ import com.exam.api.controller.dto.MoviePostDto;
 import com.exam.api.controller.dto.MoviePutDto;
 import com.exam.api.controller.dto.MovieSearchDto;
 import com.exam.api.entity.Movie;
-import com.exam.api.repository.MovieRepository;
 import com.exam.api.service.MovieService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -49,104 +48,6 @@ public class MovieController {
 
     private final ObjectMapper objectMapper;
     private final MovieService movieService;
-    private final MovieRepository movieRepository;
 
-
-    @ApiOperation(value = "모든 영화 데이타 조회")
-    @GetMapping()
-    public CommonResponse<Page<MovieDto>> getAllMovies(        
-        MovieSearchDto movieSearchDto, 
-        @PageableDefault(sort={ "id" }, direction = Direction.DESC, size=20, page=0) Pageable pageable
-        ) {
-            log.debug("<<< 모든 영화 데이타 조회 >>>");
-            return new CommonResponse<Page<MovieDto>>(movieService.searchMovieByCond(new MovieSearchDto(), pageable));
-    }
-
-
-    @ApiOperation(value = "ID로 영화 조회")
-    @GetMapping("/{movieId}")
-    public CommonResponse<MovieDto> getMovieById(@PathVariable("movieId") String movieId) {
-        log.debug("<<< ID로 영화 조회 >>>");
-
-        MovieDto movieDto = movieService.getMovieById(movieId);
-
-        log.debug(movieDto.toString());
-
-        return new CommonResponse<MovieDto>(movieDto);
-    }
-
-    @ApiOperation(value = "ID로 영화 업데이트")
-    @PutMapping("/{movieId}")
-    public CommonResponse<MovieDto> updateMovieById(@PathVariable("movieId") String movieId, @RequestBody MoviePutDto moviePutDto) {
-
-        return new CommonResponse<MovieDto>(movieService.updateMovieById(movieId, moviePutDto));
-
-    }
-
-    @ApiOperation(value = "ID로 영화 삭제")
-    @DeleteMapping("/{movieId}")
-    public CommonResponse<Boolean> removeMovieById(@PathVariable("movieId") String movieId) {
-
-        movieService.deleteMovieById(movieId);
-
-        return new CommonResponse<Boolean>(true);
-    }
-
-
-    @ApiOperation(value = "페이징 검색")
-    @GetMapping("/search")
-    public CommonResponse<Page<MovieDto>> searchMovieByCond(
-        MovieSearchDto movieSearchDto, 
-        @PageableDefault(sort={ "id" }, direction = Direction.DESC, size=20, page=0) Pageable pageable
-        ) {
-        return new CommonResponse<Page<MovieDto>>(movieService.searchMovieByCond(movieSearchDto, pageable));
-    }
-
-    @ApiOperation(value = "영화 저장")
-    @PostMapping
-    public CommonResponse<MovieDto> saveMovie(@RequestBody @Valid MoviePostDto moviePostDto) {
-
-        log.info("### MOVIE ###\n" + moviePostDto.toString());
-
-        return new CommonResponse<MovieDto>(movieService.saveMovie(moviePostDto), HttpStatus.CREATED);
-    }
-
-
-    @ApiOperation(value = "영화 데이타 로드하여 MongoDB에 저장")
-    @GetMapping("/load")
-    public void loadData() {
-        
-        log.debug("### 로드 ### ");
-
-        try {
-            List<MovieDto> movieDtos = objectMapper.readValue(new ClassPathResource("IMDB.json").getInputStream(), new TypeReference<List<MovieDto>>() {});
-
-            log.info(">>> 영화 DTO 사이즈 : " + movieDtos.size());
-
-            List<Movie> movies = movieDtos
-                .stream()
-                .map(dto -> {
-                    Movie m = Movie.of(dto);
-                    m.setId(UUID.randomUUID().toString());
-                    return m;
-                })
-                .collect(Collectors.toList())
-                ;
-
-            log.info(">>> 영화 Entity 사이즈 : " + movies.size());
-
-            List<Movie> saved = movieRepository.saveAll(movies);
-
-            log.info(">>> 영화 저장 결과 사이즈 : " + saved.size());
-
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 }
