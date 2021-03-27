@@ -62,7 +62,7 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') { 
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine' 
     }
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    // testImplementation group: 'org.springframework.kafka', name: 'spring-kafka-test', version: '2.6.7'
 
 
     annotationProcessor(

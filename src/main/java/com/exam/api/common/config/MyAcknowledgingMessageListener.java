@@ -13,11 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component 
 public class MyAcknowledgingMessageListener implements AcknowledgingMessageListener<String, String> { 
     
+
     @Override 
     @KafkaListener(topics = "mongo1.movie_db.movie_collection", groupId = "cdc-grp-1", containerFactory = "kafkaListenerContainerFactory") 
     public void onMessage(ConsumerRecord data, Acknowledgment acknowledgment) { 
         try { 
-            log.info("consume data: " + data.toString()); 
+            log.info("\n===== cdc-grp-1 : {} ===== \nconsume data: {}\n", Thread.currentThread().getId(), data.toString()); 
             acknowledgment.acknowledge(); 
         } catch (Exception e) { 
             log.error("consume cause exception : " + e); 
