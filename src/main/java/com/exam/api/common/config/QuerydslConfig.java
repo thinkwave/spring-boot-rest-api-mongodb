@@ -2,10 +2,10 @@ package com.exam.api.common.config;
 
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-// import com.querydsl.sql.H2Templates;
+import com.querydsl.sql.H2Templates;
 // import com.querydsl.sql.MySQLTemplates;
 // import com.querydsl.sql.SQLQueryFactory;
-// import com.querydsl.sql.SQLTemplates;
+import com.querydsl.sql.SQLTemplates;
 // import com.querydsl.sql.spring.SpringExceptionTranslator;
 // import com.querydsl.sql.types.DateTimeType;
 // import com.querydsl.sql.types.LocalDateType;
@@ -27,6 +27,7 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 @Configuration
 public class QuerydslConfig {
+
     private final DataSource dataSource;
 
     @PersistenceContext
@@ -42,11 +43,11 @@ public class QuerydslConfig {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
-    // @Bean
-    // @Profile("local")
-    // public SQLTemplates h2SqlTemplates() {
-    //     return new H2Templates();
-    // }
+    @Bean
+    @Profile("local")
+    public SQLTemplates h2SqlTemplates() {
+        return new H2Templates();
+    }
 
     // @Bean
     // @Profile("!local")

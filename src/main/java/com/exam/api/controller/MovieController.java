@@ -12,7 +12,7 @@ import com.exam.api.controller.dto.MovieDto;
 import com.exam.api.controller.dto.MoviePostDto;
 import com.exam.api.controller.dto.MoviePutDto;
 import com.exam.api.controller.dto.MovieSearchDto;
-import com.exam.api.entity.Movie;
+import com.exam.api.domain.Movie;
 import com.exam.api.service.MovieService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;

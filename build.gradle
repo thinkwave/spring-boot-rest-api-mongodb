@@ -41,19 +41,29 @@ dependencies {
 
     compile("org.mariadb.jdbc:mariadb-java-client")
 
+    /* QeuryDSL */
     compile("com.querydsl:querydsl-apt:${querydsl_version}")
     compile("com.querydsl:querydsl-jpa:${querydsl_version}")
+    implementation("com.querydsl:querydsl-sql-spring:${querydsl_version}")
 
     implementation 'org.modelmapper:modelmapper:2.3.9'
+    compileOnly 'org.projectlombok:lombok:1.18.18'
+
+    /* swagger 3.0 */
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
+    /* kafka */
+    implementation 'org.springframework.kafka:spring-kafka'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    runtimeOnly('com.h2database:h2')
+    implementation('org.mariadb.jdbc:mariadb-java-client')
+
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') { 
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine' 
     }
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 
-    compileOnly 'org.projectlombok:lombok:1.18.18'
 
     annotationProcessor(
             'org.springframework.boot:spring-boot-configuration-processor',

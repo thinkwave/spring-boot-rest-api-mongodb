@@ -1,6 +1,6 @@
 package com.exam.api.controller.dto;
 
-import com.exam.api.entity.Movie;
+import com.exam.api.domain.Movie;
 import com.exam.api.util.ModelMapperUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
